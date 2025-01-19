@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\Admin\UserService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -34,8 +35,10 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $organization = $request->organization;
-        $this->userService->store($organization, $request);
 
+        $user = $this->userService->store($organization, $request);
+        event(new Registered($user));
+        
         return response()->json([
             "status" => true,
             "message" => "User Added"
