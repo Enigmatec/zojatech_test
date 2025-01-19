@@ -20,6 +20,5 @@ Route::middleware(['auth:sanctum', 'organization'])->group(function(){
         Route::apiResource('users', UserController::class);
         Route::apiResource('structures', OrganizationStructureController::class);
         Route::apiResource('structures.items', StructureItemController::class);
-
     });
 });
